@@ -1,0 +1,6 @@
+log_config:
+  log_level: "debug"
+  filename: "proxy"
+  max_size: 200
+  max_backups: 10
+  max_age: 30
