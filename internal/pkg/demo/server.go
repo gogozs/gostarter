@@ -3,6 +3,8 @@ package demo
 import (
 	"context"
 
+	"github.com/gogozs/zlib/xrpc/server/serverinterceptors"
+
 	rpc "github.com/gogozs/zlib/xrpc/server"
 
 	"google.golang.org/grpc"
@@ -17,18 +19,20 @@ type GreeterService struct {
 var _ demo.GreeterServer = (*GreeterService)(nil)
 
 func (s GreeterService) SayHello(ctx context.Context, request *demo.HelloRequest) (*demo.HelloReply, error) {
-	//TODO implement me
-	panic("implement me")
+	return &demo.HelloReply{Message: request.Name}, nil
 }
 
 func (s GreeterService) SayHelloAgain(ctx context.Context, request *demo.HelloRequest) (*demo.HelloReply, error) {
-	//TODO implement me
 	panic("implement me")
 }
 
 func NewGreetServer(addr string) *rpc.RpcServer {
-	return rpc.NewRpcServer(addr, func(server *grpc.Server) {
-		srv := GreeterService{}
-		demo.RegisterGreeterServer(server, srv)
-	})
+	registerFn := func(server *grpc.Server) {
+		demo.RegisterGreeterServer(server, GreeterService{})
+	}
+	return rpc.NewRpcServer(
+		addr,
+		registerFn,
+		rpc.WithUnaryServerOption(serverinterceptors.LogInterceptor),
+	)
 }
