@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"github.com/gogozs/gostarter/internal/pkg/demo"
+	"github.com/gogozs/gostarter/internal/server/demo"
 )
 
 func main() {
