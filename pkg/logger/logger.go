@@ -10,11 +10,11 @@ import (
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 
-	"github.com/gogozs/gostarter/configs"
+	"github.com/gogozs/gostarter/conf"
 )
 
 // InitLogger global logger init
-func InitLogger(config *configs.Config) {
+func InitLogger(config *conf.Config) {
 	w := zapcore.AddSync(&lumberjack.Logger{
 		Filename:   config.LogConfig.Filename,
 		MaxSize:    config.LogConfig.MaxSize, // MB
